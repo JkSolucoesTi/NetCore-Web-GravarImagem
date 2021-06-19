@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,6 +34,13 @@ namespace JkSolucoes.Consultoria.Controllers
             Image.ContentType = Img.ContentType;
             db.Imagem.Add(Image);
             db.SaveChanges();
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\File", Img.FileName);
+            var stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite);
+            Img.CopyToAsync(stream);
+            
+                
+
             return RedirectToAction("Index");
         }
 
