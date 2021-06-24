@@ -26,18 +26,21 @@ namespace JkSolucoes.Consultoria.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Imagem Image, IFormFile Img, [FromServices] ApplicationContext db)
+        public IActionResult Create(Imagem Image, [FromServices] ApplicationContext db)
         {
-            Image.Picture = Img.ToByteArray();
-            Image.Length = (int)Img.Length;
-            Image.Extension = Img.GetExtension();
-            Image.ContentType = Img.ContentType;
+
+            Image.Picture = Image.Img.ToByteArray();
+            Image.Length = (int)Image.Img.Length;
+            Image.Extension = Image.Img.GetExtension();
+            Image.ContentType = Image.Img.ContentType;
             db.Imagem.Add(Image);
             db.SaveChanges();
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\File", Img.FileName);
-            var stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite);
-            Img.CopyToAsync(stream);
+            
+
+          //  var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\File", Img.FileName);
+           // var stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite);
+            //Img.CopyToAsync(stream);
             
                 
 
